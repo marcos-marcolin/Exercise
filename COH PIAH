@@ -80,3 +80,31 @@ def calcula_assinatura(texto):
 def avalia_textos(textos, ass_cp):
     '''IMPLEMENTAR. Essa funcao recebe uma lista de textos e uma assinatura ass_cp e deve devolver o numero (1 a n) do texto com maior probabilidade de ter sido infectado por COH-PIAH.'''
     pass
+def avalia_textos(textos, ass_cp):
+    #IMPLEMENTAR. Essa funcao recebe uma lista de textos e deve devolver o numero (1 a n) do texto com maior probabilidade de ter sido infectado por COH-PIAH.
+    i = 1
+    assinatura_texto = calcula_assinatura(textos[i]) #calcula a assinatura do primeiro texto
+    grau_similaridade = compara_assinatura(assinatura_texto, ass_cp) #verifica o grau de similaridade do primeiro texto com a assinatura do aluno
+                                                                            #infectado com COH-PIAH
+    
+    menor_grau = grau_similaridade  #este será definido como o menor grau de similaridade (quanto mais similares eles forem, menor será o grau)
+    texto_infectado = i   #o texto 0 será definido como o texto infectado, inicialmente
+    i = i+1
+    while i <(len (textos)): #depois e preciso fazer o mesmo com o restante dos textos
+        assinatura_texto = calcula_assinatura(textos[i])
+        grau_similaridade = compara_assinatura(assinatura_texto, ass_cp) #cp = coh-piah
+        if grau_similaridade < menor_grau:  #se o texto sendo analisado tem o grau menor do que o armazenado, 
+            menor_grau = grau_similaridade  #substitui o valor
+            texto_infectado = i             #e também o índice do texto infectado
+        i = i+1
+                  
+    print ("O autor do texto %d está infectado com COH-PIAH" %(texto_infectado))
+    return texto_infectado
+    pass
+
+def main():
+    assinatura_cp = le_assinatura() #lê a assinatura do aluno infectado com COH-PIAH e retorna a assinatura, que é uma lista contendo os 6 traços linguísticos
+    textos_lidos = le_textos()  #lê os textos e retorna uma lista de textos que serão comparados com a assinatura do aluno infectado com COH-PIAH
+    avalia_textos(textos_lidos, assinatura_cp) #todos os textos serão comparados com a assinatura do aluno infectado com COH-PIAH para ver qual é mais parecido
+
+main()
